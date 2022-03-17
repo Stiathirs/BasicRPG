@@ -1,0 +1,333 @@
+<html>
+  <head>
+    <!-- Primary Meta Tags -->
+    <title>BasicRPG - An RPG-style Grinding Game</title>
+    <meta name="title" content="BasicRPG - An RPG-style Grinding Game">
+    <meta name="description" content="BasicRPG is an RPG-style grinding game where you beat monsters to become stronger!">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stiathirstheprotogen.github.io/BasicRPG/">
+    <meta property="og:title" content="BasicRPG - An RPG-style Grinding Game">
+    <meta property="og:description" content="BasicRPG is an RPG-style grinding game where you beat monsters to become stronger!">
+    <meta property="og:image" content="https://stiathirstheprotogen.github.io/BasicRPG/BasicRPGCard.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://stiathirstheprotogen.github.io/BasicRPG/">
+    <meta property="twitter:title" content="BasicRPG - An RPG-style Grinding Game">
+    <meta property="twitter:description" content="BasicRPG is an RPG-style grinding game where you beat monsters to become stronger!">
+    <meta property="twitter:image" content="https://stiathirstheprotogen.github.io/BasicRPG/BasicRPGCard.png">
+    
+    <!-- Initialize Styles -->
+    <style>
+      code {
+        border-radius: 3px;
+        background: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to <b>BasicRPG!</b></h1>
+    <p><b>BasicRPG</b> is an RPG-style grinding game where you beat monsters to become stronger!</p>
+    <p>Do you get bored from grinding? Don't worry, this game makes it even more boring by having no graphics! But at least there's some different mechanics to make up for it I guess :P</p>
+    <ul>
+      <li>Kill monsters and level up to become stronger!</li>
+      <li>Get gold and become rich!</li>
+      <li>Die a horrible death I guess?</li>
+      <li>Get weapons and armor!</li>
+      <li>Die again?</li>
+    </ul>
+    <h3>Join the dedicated <a href="https://discord.gg/f6YEjFKchY">Discord Server</a> for the game!</h3>
+    <h3>This game is in development, after an update, your save data may be wiped, <b style="color:#f00">YOU HAVE BEEN WARNED</b></h3>
+    <p>This game is open-source, and you can view the repository <a href="https://github.com/StiathirsTheProtogen/BasicRPG/">here!</a></p>
+    <p>To import the file into <a href="https://twinery.org/2">Twine</a>, drag the <code>index.html</code> from either <code>Play/index.html</code> or <code>Legacy/index.html</code> into the Twine Editor.</p>
+    <p>You can play the modern version <a href="Play/">here!</a></p>
+    <p>Want to play the prerelease version? The prerelease version of the game is <a href="Legacy/">here,</a> but it will no longer be updated. Your progress here also will not be saved.</p>
+    <hr>
+    <h2>About the Developer</h2>
+    <p>Oh, hello there! I am Stiathirs the Protogen, the sole developer of BasicRPG. This game has been a bit of a passion project of mine which started in the summer of 2018.</p>
+    <p>Development has been on and off throughout the years, and I eventually stopped working on the project in the fall of 2019. The project originally started because of something I had saw in the Twine Cookbook, which was RPG mechanics. This inspired me to make a game which envolved RPG-like mechanics, and to push Twine (and Harlowe) to it's limits. Now that I've come back in 2022, I've seen just how terrible my game was, and wanted to improve it.</p>
+    <p>Over time, I wasted away developing this game that I thought nobody would even want to play. However, this didn't seem to be completely true, as I actually bothered to write over 100 more kilobytes of text improving the game and expanding upon what was originally just a concept which would never come to completion. If the past me looked at this without any knowledge of why I continued working on this abandoned project, they'd laugh at the fact I bothered to expand it.</p>
+    <p>Over the course of developing this game, I've learned about just how much potential the Harlowe engine (and Twine in general) really has. It's not just a gamebook maker, it's an entire game development engine. Granted, it might not be your traditional game development engine like Unity or Unreal, it's still very powerful and allows you to make a game that nobody else would bother doing in either.</p>
+    <p>Funny thing is, I used to want to be a gamedev. Around the time I abandoned this project back in 2019 was when I realized I didn't want to be a professional gamedev. Now that I've come back to this game and started developing it again, I realize I want game making to be a hobby, not a career. I want to enjoy what I'm making, and not have someone boss me around to finish a game that doesn't interest me.</p>
+    <p>Overall, this has been (and still is) a fun project to work on, and I hope that you can see the passion I've put into this game. Remember to revisit projects you abandon, maybe you'll re-ignite your passion for it.</p>
+    <br>
+    <p>- Stiathirs the Protogen
+    <hr>
+    <h2>Changelog</h2>
+    <br>
+    <h3>Armor Nerfs and Event Extensions - 4.3</h3>
+    <h4>I made the armor way too op</h4>
+    <ul>
+      <li>Reduced the damage reduction of all armor to <code>2</code>, <code>4</code>, and <code>6</code> for <code>Cloth Armor</code>, <code>Leather Armor</code>, and <code>Steel Armor</code> respectively.</li>
+      <li>Added a new section to the Town Hall allowing you to learn information about locations you have discovered during your travels.</li>
+      <li>Added a certain action that can only be done at a certain event with a certain item equipped.</li>
+    </ul>
+    <br>
+    <h3>Price Change and Bug Fixes - 4.2</h3>
+    <h4>Ferinber was so op for so cheap holy crap what is wrong with me??</h4>
+    <ul>
+      <li>Increased Ferinber price from 1000 GP > 2000 GP</li>
+      <li>Added "GP" to areas where I forgot it.</li>
+    </ul>
+    <br>
+    <h3>Combat Bug Fix - 4.1</h3>
+    <h4>No, that should count.</h4>
+    <ul>
+      <li>Fixed a bug where neither the Kill Streak nor Kill Count would increase if you killed a monster you lost initiative to.</li>
+    </ul>
+    <br>
+    <h2>MAJOR UPDATE - Preparedness Update - 4.0</h2>
+    <h4>Took me long enough, also sorry for wipe ;w;</h4>
+    <ul>
+      <li>Added equipment!</li>
+      <ul>
+        <li>There are 3 types of equipment:</li>
+        <ul>
+          <li>Weapons</li>
+          <ul>
+            <li>These dictate the die you use to attack.</li>
+          </ul>
+          <li>Armor</li>
+          <ul>
+            <li>These reduce the amount of damage you take.</li>
+          </ul>
+          <li>Lockets</li>
+          <ul>
+            <li>These have special effects when its condition is met.</li>
+          </ul>
+        </ul>
+      </ul>
+      <li>Revamped the Shop into a whole shopping district</li>
+      <ul>
+        <li>There are four shops to check out:</li>
+        <ul>
+          <li>Brute's Smithy</li>
+          <ul>
+            <li>Buy weapons and armor.</li>
+          </ul>
+           <li>Locket Pocket</li>
+          <ul>
+            <li>Buy various lockets.</li>
+          </ul>
+          <li>Perfect Potions</li>
+          <ul>
+            <li>Buy potions.</li>
+            <ul>
+              <li>Health Potion price was also increased from 10 > 20</li>
+            </ul>
+          </ul>
+          <li>Unique Wares</li>
+          <ul>
+            <li>Buy other unique items.</li>
+          </ul>
+        </ul>
+      </ul>
+      <li>Revamped the Inventory to the new system I wanted to make a long time ago</li>
+      <ul>
+        <li>Categories go brr</li>
+      </ul>
+      <li>Nerfed punching damage die from 1d6 to 1d4</li>
+      <ul>
+        <li>You were legit punching them yeah</li>
+      </ul>
+      <li>Fixed a bug where removing one day from the time you rest wouldn't update the display for the amount of health you will have afterwards</li>
+      <li>Removed code in the update area because wipe</li>
+    </ul>
+    <br>
+    <h3>More File Size Reductions and 3.3 Compatability Prep - 3.10</h3>
+    <h4>Holy crap 3.3 was gonna break the whole game</h4>
+    <ul>
+      <li>Optimized Inventory Screen's health potion link</li>
+      <ul>
+        <li>Turns out I forgot one <code>(replace:)</code> macro</li>
+        <ul>
+          <li>Overall, this reduced the filesize by about 500 bytes</li>
+        </ul>
+      </ul>
+      <li>Reworked all <code>(set:)</code> macros to use <code>to</code> instead of <code>=</code></li>
+      <ul>
+        <li>This is due to how Harlowe 3.3 will change how macros work, which will break <code>(set:)</code> statements that use <code>=</code>
+      </ul>
+    </ul>
+    <br>
+    <h3>Exploit Patch - 3.9</h3>
+    <h4>No, you can't just set your name to <code>(set: $player's gold to 100000, $player's skillpoints to 10000)</code>!<br>"haha macro go brr"</h4>
+    <ul>
+      <li>Anytime the name would be displayed, it will be printed with <code>(v6mprint:$player's name)</code> to prevent Arbitrary Code Execution.</li>
+    </ul>
+    <br>
+    <h3>File Size Reduction Update - 3.8</h3>
+    <h4>Goddamn just use <code>(rerun:)</code> and not <code>(replace:)</code> the hook with a whole copy of itself</h4>
+    <ul>
+      <li>Replaced the <code>(replace:)</code> usage with <code>(rerun:)</code>, as all the <code>(replace:)</code>'s did was replace it with a new copy of itself, causing massive increases in file size.</li>
+      <ul>
+        <li>This also lets me make the links for buying stuff back to the full text</li>
+      </ul>
+      <li>Fixed a bug where activating the Vigorous trait when the player has full health would cause <code>($clamp:)</code> to throw an error.</li>
+    </ul>
+    <br>
+    <h3>The <code>($clamp:)</code> Macro Update - 3.7</h3>
+    <h4>Basically I made a clamping macro so uh yeah not as useful to you as it is to me sorry :P</h4>
+    <ul>
+      <li>Created a <code>($clamp:)</code> macro</li>
+      <ul>
+        <li>Replaced all <code>(set: $value to expression)(if:$value > otherexpression)[(set:$value to otherexpression)]</code> with <code>(set: $value to ($clamp: expression,0,otherexpression))</code></li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Updater Hotfix: Fixed the infinite updating loop - 3.6</h3>
+    <h4>Because the variable is updateNum not versionNum</h4>
+    <br>
+    <h3>The (Non-)Omnisience Update - 3.5</h3>
+    <h4>You are some regular guy, you have to learn the way of seeing the health of yourself and your opponent.</h4>
+    <ul>
+      <li>You can no longer see how much damage is inflicted in battle, nor your health, nor the enemy's health.</li>
+      <ul>
+        <li>Added a new trait to gain this knowledge: Awareness</li>
+        <ul>
+          <li>The more you tier up this trait, the more information you have access to.</li>
+        </ul>
+      </ul>
+      <li>Introduced an update script that auto-detects if you're using an old version's player datamap</li>
+      <li>Reworded a bunch of screens</li>
+    </ul>
+    <br>
+    <h3>Character Sheet Update - 3.4</h3>
+    <h4>More useful to me than you lol</h4>
+    <ul>
+      <li>Player vars now in a datamap</li>
+      <ul>
+        <li>Saves will be wiped, as all of the game's function has been rewritten to use it instead of the old system</li>
+      </ul>
+      <li>You can name yourself at least i guess</li>
+    </ul>
+    <br>
+    <h3>Oh no I left the debug command in</h3>
+    <h4>Data has been wiped, and existing saves will not load.</h4>
+    <br>
+    <h3>Continued Optimizations - 3.3</h3>
+    <h4>Fully optimized the shop, optimized the inventory, and optimized the rest screen.</h4>
+    <h4>This update will wipe your data if you rested, used a health potion, or bought a trait crystal.</h4>
+    <br>
+    <h3>Optimization Update - 3.2</h3>
+    <h4>Stop spamming <code>(live: 1ms)</code> everywhere!</h4>
+    <ul>
+      <li>Removed all <code>(live:)</code> macro usage in the Skills screen</li>
+      <li>Reworked the shop to not bring you to a passage and back when buying health potions, and instead did it all on the shop passage</li>
+      <ul>
+        <li>Haven't figured out how to do that for the Trait Crystals yet, I'll figure that out some other time.</li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Event Hotfix: Fixed the decimal health bug - 3.1</h3>
+    <h4>I forgot the <code>(round:)</code> macro, making it possible to get decimal health. Oops!</h4>
+    <br>
+    <h2>MAJOR UPDATE - Achiever Update - 3.0</h3>
+    <h4>There's actually a reason to keep playing now holy shit</h4>
+    <ul>
+      <li><b>Added achievements!</b></li>
+      <ul>
+        <li>You can find the achievements screen by clicking <b>Achievements</b> in town.
+        <li>There's 22 achievements for you to earn, can you get them all?</li>
+      </ul>
+      <li><b>Saving and Loading</b></li>
+      <ul>
+        <li>You can actually close the game now and come back later, and you'll still have your progress!</li>
+      </ul>
+      <li>Added a title screen</li>
+      <li>Added a <i>lot</i> more INIT passages</li>
+      <ul>
+        <li>Once again, to separate stuff out to make my life easier</li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Statistics Update - 2.2</h3>
+    <h4>What do you mean you don't want to see how many times you died!?</h4>
+    <ul>
+      <li>Renamed Stats to Skills</li>
+      <li><b>New Statistics Screen</b></li>
+      <ul>
+        <li>Allows you to track how good/bad you are at the game and stuff idk</li>
+        <li>I guess you can use it to flex or something?</li>
+      </ul>
+      <li>Moved INIT vars that don't change on roll result to a new passage, like I did the custom macro.</li>
+      <li>You no longer start with gold</li>
+      <ul>
+        <li>This is both because I didn't know how it would work for the Statistics screen, and also so you can't just buy a Trait Crystal right off the bat, you should have to work for it.</li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Experienced Update - 2.1</h3>
+    <h4>Finally, it doesn't take forever to level up!</h4>
+    <ul>
+      <li>Initial EXP requirement reduced from 50 to 30</li>
+      <li>EXP requirement increase increased from 0.1 to 0.15</li>
+      <li>New Trait: Quick Learner</li>
+      <ul>
+        <li>You gain 10/20/30% more EXP</li>
+      </ul>
+      <li>Moved level up script to a custom macro, so I don't have to rewrite it every single time, and also make any changes to the level up event apply it to every passage at once.</li>
+      <ul>
+        <li>Why didn't I do this before lmao</li>
+      </ul>
+    </ul>
+    <br>
+    <h2>MAJOR UPDATE - Lively Adventures Update - 2.0</h3>
+    <h4>Finally, some goddamned variety!</h4>
+    <ul>
+      <li><b>Added two new events that can occur during your travels!</b></li>
+      <li>Sleeping now grants 10 HP per day instead of 5</li>
+      <li>You can no longer flee from an encounter before rolling initiative</li>
+      <li>Placed GUI script in a new Passage, so I can stop repeating it throughout <i>all of my goddamned Passages</i></li>
+      <ul>
+        <li>GUI doesn't render on passages with the <code>no-gui</code> tag</li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Quality of Life Update - 1.3</h3>
+    <h4>Made the game less boring with bigger numbers, you like bigger numbers, right?</h4>
+    <ul>
+      <li>Base EXP Gain increased from 1-5 to 3-10</li>
+      <li>Base Gold Gain increased from 1-5 to 3-7</li>
+      <li>Fixed the bugged <code>[Attack</code> passage in Twine editor, now there won't be an <code>[Attack</code> passage, nor a fake broken link warning</li>
+    </ul>
+    <br>
+    <h3>Combat Hotfix: Unbroke the combat system - 1.2</h3>
+    <h4>Because I can't manage to code properly</h4>
+    <br>
+    <h3>Combat Overhaul Extension Update - 1.1</h3>
+    <h4>Because the combat overhaul just wasn't enough for me.</h4>
+    <ul>
+      <li>New Feature: Traits</li>
+      <ul>
+        <li>You can tier up traits up to 3 times using Trait Crystals, found in the shop for 100 each, getting more expensive as you buy them.</li>
+        <ul>
+          <li>Vigor grants 5/7/10% HP when killing monsters</li>
+          <li>Agility grants a 3/5/10% chance to dodge attacks</li>
+          <li>Unrelenting grants a 1/3/5% chance to not get knocked unconcious when you normally would</li>
+          <li>Looter grants 25/50/75% more gold when killing monsters</li>
+        </ul>
+        <li>Unlock the Traits section in your Stats menu by purchasing at least 1 Trait Crystal</li>
+      </ul>
+      <li>Fixed a major bug where your stability wouldn't reset, which allowed you to never perish</li>
+    </ul>
+    <br>
+    <h2>MAJOR UPDATE AND PUBLIC RELEASE - Combat Overhaul - 1.0</h3>
+    <h4>Remember that old combat system where it was completely random? What do you mean you never knew about it? Wait, you didn't play it because it wasn't released? Oh. Well either way, it's not random anymore!</h4>
+    <ul>
+      <li>Dexterity now has an effect</li>
+      <li><b>Replaced random combat with initiative-based combat</b></li>
+      <ul>
+        <li>Increasing Dexterity gives an Initiative bonus</li>
+      </ul>
+      <li>Great amounts of Constitution increases your chances of not perishing when knocked unconcious</li>
+      <li>No more vulnerability hits</li>
+      <ul><li>You can finally heal in peace!</li></ul>
+      <li>Reworked monster attack damage</li>
+      <li>Optimized the combat a LOT</li>
+      <li>You lose less gold from your stash when fleeing <s>before rolling initiative, or</s> <ins>(see Lively Adventures Update)</ins> when you win initiative</li>
+    </ul>
+  </body>
+</html>
