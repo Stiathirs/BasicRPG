@@ -44,10 +44,11 @@ As you check for your stash, it&#39;s gone!(set:$player&#39;s stash to 0)]
 (if:(save-game:&quot;A&quot;))[](else:)[(alert: &quot;Your game couldn&#39;t be saved. Are cookies blocked?&quot;,&quot;OK&quot;)]</tw-passagedata><tw-passagedata pid="3" name="Adventure!" tags="no-gui" position="700,700" size="100,100">(set: _eventRoll to (random: 1,100), $eventResult to (random: 1,100), $eventCount to it + 1)
 (if: _eventRoll &lt;= 5 and $killStreak &gt;= 5 and $justAtEvent is false)[(set: $justAtEvent to true)(goto:&quot;Shrine&quot;)](elseif: _eventRoll &lt;= 15 and $killStreak &gt;= 2 and $justAtEvent is false)[(set: $justAtEvent to true)(goto:&quot;Clearing&quot;)](else:)[(set: $eventCount to it - 1)(goto:&quot;Monster Encounter&quot;)]
 
-&lt;!-- You might be wondering why I added then subtracted on monster encounter, but it&#39;s easier to just do that then repeat the +1 for each event --&gt;</tw-passagedata><tw-passagedata pid="4" name="Rest" tags="no-gui" position="1100,750" size="100,100">(set: $sleeptime to 1)|rest&gt;[(set: $dispHP to ($clamp:$player&#39;s health + ($sleeptime * 10),1,$player&#39;s maxhealth))]You will rest for (live: 1ms)[$sleeptime] day(s).
-(if: $player&#39;s awareness &gt; 1)[You will have (live: 1ms)[$dispHP]/(text: $player&#39;s maxhealth) HP when you are done resting.](else:)[You will (live: 1ms)[(set:_phr to $dispHP / $player&#39;s maxhealth)(cond: _phr &gt;= 1, &quot;be in perfect health&quot;, _phr &gt; 0.75, &quot;be in good health&quot;, _phr &gt; 0.5, &quot;remain wounded&quot;, _phr &gt; 0.25, &quot;remain majorly wounded&quot;, _phr &gt; 0, &quot;remain at Death&#39;s Door&quot;)] when you are done resting.]
+&lt;!-- You might be wondering why I added then subtracted on monster encounter, but it&#39;s easier to just do that then repeat the +1 for each event --&gt;</tw-passagedata><tw-passagedata pid="4" name="Rest" tags="no-gui" position="1100,750" size="100,100">(set: $sleeptime to 1)|rest&gt;[(set: $dispHP to ($clamp:$player&#39;s health + ($sleeptime * 10),1,$player&#39;s maxhealth))You will rest for (plural: $sleeptime, &quot;day&quot;).]
+(if: $player&#39;s awareness &gt; 1)[You will have |disp&gt;[$dispHP]/(text: $player&#39;s maxhealth) HP when you are done resting.](else:)[You will |disp&gt;[(set:_phr to $dispHP / $player&#39;s maxhealth)(cond: _phr &gt;= 1, &quot;be in perfect health&quot;, _phr &gt; 0.75, &quot;be in good health&quot;, _phr &gt; 0.5, &quot;remain wounded&quot;, _phr &gt; 0.25, &quot;remain majorly wounded&quot;, _phr &gt; 0, &quot;remain at Death&#39;s Door&quot;)] when you are done resting.]
 
-(linkrepeat: &quot;[-10 Days]&quot;)[(set: $sleeptime to ($clamp: it - 10, 1, it))(rerun:?rest)] (linkrepeat: &quot;[-1 Day]&quot;)[(set: $sleeptime to ($clamp: it - 1,1,it))(rerun:?rest)] (linkrepeat: &quot;[+1 Day]&quot;)[(set: $sleeptime to it + 1)(rerun:?rest)] (linkrepeat: &quot;[+10 Days]&quot;)[(set: $sleeptime to it + 10)(rerun:?rest)]
+(linkrepeat: &quot;[-10 Days]&quot;)[(set: $sleeptime to ($clamp: it - 10, 1, it))(rerun:?rest,?disp)] (linkrepeat: &quot;[-1 Day]&quot;)[(set: $sleeptime to ($clamp: it - 1,1,it))(rerun:?rest,?disp)] (linkrepeat: &quot;[+1 Day]&quot;)[(set: $sleeptime to it + 1)(rerun:?rest,?disp)] (linkrepeat: &quot;[+10 Days]&quot;)[(set: $sleeptime to it + 10)(rerun:?rest,?disp)]
+
 (link:&quot;Rest&quot;)[(set: $player&#39;s health to ($clamp:it + ($sleeptime * 10),1,$player&#39;s maxhealth))(set: $res to false)(set: $day to it + $sleeptime, $daysRested to it + $sleeptime)(goto:&quot;main&quot;)]
 [[Cancel|main]]</tw-passagedata><tw-passagedata pid="5" name="Shopping District" tags="" position="1100,450" size="100,100">
 
@@ -84,19 +85,19 @@ Equipment:
 ](if: $player&#39;s inventory&#39;s weapons contains &quot;Shortsword&quot;)[Shortsword - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s weapon to (dm:&quot;name&quot;,&quot;Shortsword&quot;,&quot;attacks&quot;,(a:&quot;quickly slash&quot;,&quot;stab&quot;,&quot;slice&quot;),&quot;die&quot;,8))(rerun: ?weapon)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A standard shortsword, short and light, but deadly. //Damage: 1d8//&quot;, &quot;X&quot;)]
 ](if: $player&#39;s inventory&#39;s weapons contains &quot;Longsword&quot;)[Longsword - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s weapon to (dm:&quot;name&quot;,&quot;Longsword&quot;,&quot;attacks&quot;,(a:&quot;slash&quot;,&quot;stab&quot;,&quot;slice&quot;),&quot;die&quot;,10))(rerun: ?weapon)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A standard steel longsword, long and heavy, but very lethal. //Damage: 1d10//&quot;, &quot;X&quot;)]
 ](if: $player&#39;s inventory&#39;s weapons contains &quot;Morningstar&quot;)[Morningstar - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s weapon to (dm:&quot;name&quot;,&quot;Morningstar&quot;,&quot;attacks&quot;,(a:&quot;bash&quot;,&quot;stab&quot;,&quot;impale&quot;),&quot;die&quot;,12))(rerun: ?weapon)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A steel club-like weapon with a spiked steel ball on its end, and is of medium weight. //Damage: 1d12//&quot;, &quot;X&quot;)]
-](if: $player&#39;s inventory&#39;s weapons contains &quot;Ferinber&quot;)[Ferinber - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s weapon to (dm:&quot;name&quot;,&quot;Ferinber&quot;,&quot;attacks&quot;,(a:&quot;cleave&quot;,&quot;slam&quot;,&quot;deliver a heavy slash to&quot;),&quot;die&quot;,20))(rerun: ?weapon)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A well-forged greatsword, definitely deserves its name. //Damage: 1d20//&quot;, &quot;X&quot;)]]
+](if: $player&#39;s inventory&#39;s weapons contains &quot;Ferinber&quot;)[Ferinber - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s weapon to (dm:&quot;name&quot;,&quot;Ferinber&quot;,&quot;attacks&quot;,(a:&quot;cleave&quot;,&quot;slam&quot;,&quot;deliver a heavy slash to&quot;),&quot;die&quot;,20))(rerun: ?weapon)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A well-forged greatsword, deserving of its name. //Damage: 1d20//&quot;, &quot;X&quot;)]]
 
 ](if: $player&#39;s inventory&#39;s lockets&#39;s length &gt; 0)[Lockets
 ---
-(if: $player&#39;s inventory&#39;s lockets contains &quot;Locket of Undying&quot;)[Locket of Undying - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s locket to &quot;Locket of Undying&quot;)(rerun: ?locket)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A golden locket with the shape of a pair of wings embossed on it.&quot;+(cond:$undyingLocketCursed,&quot; The wings are glowing with a red light.&quot;,$usedUndyingLocket,&quot;&quot;,&quot; The wings are glowing with a white light.&quot;)+ (cond:$undyingLocketCursed,&quot; //Revives you once per adventure?//&quot;,&quot; //Revives you once per adventure.//&quot;), &quot;X&quot;)]] (link:&quot;TEST CURSE&quot;)[(set:$undyingLocketCursed to true, $usedUndyingLocket to true)]
+(if: $player&#39;s inventory&#39;s lockets contains &quot;Locket of Undying&quot;)[Locket of Undying - (link-repeat: &quot;Equip&quot;)[(set: $player&#39;s equipment&#39;s locket to &quot;Locket of Undying&quot;)(rerun: ?locket)] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A golden locket with the shape of a pair of wings embossed on it.&quot;+(cond:$undyingLocketCursed,&quot; The wings are glowing with a red light.&quot;,$usedUndyingLocket,&quot;&quot;,&quot; The wings are glowing with a white light.&quot;)+ (cond:$undyingLocketCursed,&quot; //Revives you once per adventure?//&quot;,&quot; //Revives you once per adventure.//&quot;), &quot;X&quot;)]]
 
 ](if: $player&#39;s inventory&#39;s potion&#39;s health &gt; 0)[Potions
 ---
-|healthPots&gt;[(if: $player&#39;s inventory&#39;s potion&#39;s health &gt; 0)[|healthPotCount&gt;[(text: $player&#39;s inventory&#39;s potion&#39;s health) Health Potion(cond: $player&#39;s inventory&#39;s potion&#39;s health &gt; 1, &quot;s&quot;, &quot;&quot;)] - (link-repeat:&quot;Quaff&quot;)[(set: $player&#39;s health to $player&#39;s maxhealth, $player&#39;s inventory&#39;s potion&#39;s health to it - 1)(rerun:?healthPots,?health)] | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A classic red potion. //Heals you to full health.//&quot;,&quot;X&quot;)]]]
+|healthPots&gt;[(if: $player&#39;s inventory&#39;s potion&#39;s health &gt; 0)[|healthPotCount&gt;[(plural: $player&#39;s inventory&#39;s potion&#39;s health, &quot;Health Potion&quot;)] - (link-repeat:&quot;Quaff&quot;)[(set: $player&#39;s health to $player&#39;s maxhealth, $player&#39;s inventory&#39;s potion&#39;s health to it - 1)(rerun:?healthPots,?health)] | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A classic red potion. //Heals you to full health.//&quot;,&quot;X&quot;)]]]
 
 ](if: $player&#39;s inventory&#39;s crystal&#39;s trait &gt; 0)[Crystals
 ---
-(if: $player&#39;s inventory&#39;s crystal&#39;s trait &gt; 0)[(text: $player&#39;s inventory&#39;s crystal&#39;s trait) Trait Crystal(cond: $player&#39;s inventory&#39;s crystal&#39;s trait &gt; 1, &quot;s&quot;,&quot;&quot;) - (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A glowing green crystal, supposedly this helps improve a trait. //Can only be used on the Skills screen.//&quot;,&quot;X&quot;)]]
+(if: $player&#39;s inventory&#39;s crystal&#39;s trait &gt; 0)[(plural: $player&#39;s inventory&#39;s crystal&#39;s trait, &quot;Trait Crystal&quot;) - (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A glowing green crystal, supposedly this helps improve a trait. //Can only be used on the Skills screen.//&quot;,&quot;X&quot;)]]
 
 ](linkgoto:&quot;Return&quot;, $inventoryLocation)</tw-passagedata><tw-passagedata pid="7" name="adventureINIT" tags="" position="800,700" size="100,100">(if: not $adventuring)[(set: $adventuring to true, $killStreak to 0, $reloadBlocker to false)]
 (set: $res to false, $rolledHealth to false, $justAtEvent to false)
@@ -111,10 +112,10 @@ Your stash is now worth (text: $player&#39;s stash) GP.
 ]
 $blackout[[Return to town|aDayPasses]]</tw-passagedata><tw-passagedata pid="10" name="aDayPasses" tags="no-gui" position="700,1200" size="100,100">(live: 5s)[(stop:)(set: $day to it + 1)(if: $killStreak &gt; $highestKillStreak)[(set: $highestKillStreak to $killStreak)](goto: &quot;main&quot;)]</tw-passagedata><tw-passagedata pid="11" name="Skills" tags="" position="950,750" size="100,100">
 Money: (text: $player&#39;s gold) GP
-Day: $day
+Day: (print:$day)
 
 
-Skill Points: |sp&gt;[(text: $player&#39;s skillpoints)]
+|sp&gt;[(plural: $player&#39;s skillpoints, &quot;Skill Point&quot;)]
 
 Strength: |str&gt;[(text: $player&#39;s strength)] (linkrepeat: &quot;+1&quot;)[(if: $player&#39;s skillpoints is not 0)[(set: $player&#39;s strength to it + 1, $player&#39;s skillpoints to it - 1)(set: $player&#39;s attack&#39;s modifier to (floor: $player&#39;s strength / 2) - 1)(rerun:?str,?dmgMod,?sp)]]
 Dexterity: |dex&gt;[(text: $player&#39;s dexterity)] (linkrepeat: &quot;+1&quot;)[(if: $player&#39;s skillpoints is not 0)[(set: $player&#39;s dexterity to it + 1, $player&#39;s skillpoints to it - 1)(set: $player&#39;s stealth to (floor: $player&#39;s dexterity / 3))(rerun:?dex,?initBonus,?sp)]]
@@ -122,10 +123,11 @@ Constitution: |con&gt;[(text: $player&#39;s constitution)] (linkrepeat: &quot;+1
 
 Damage Modifier (Dependent on Strength): |dmgMod&gt;[+(text: $player&#39;s attack&#39;s modifier)]
 Initiative Bonus (Dependent on Dexterity) : |initBonus&gt;[(text: $player&#39;s stealth)]
-Stability Bonus on nat20 (Dependent on Constitution): +|staBonus&gt;[(text:$player&#39;s stability)]
+Stability Bonus on nat20 (Dependent on Constitution): +|staBonus&gt;[(text:$player&#39;s stability)](if: $currentCrystal &gt; 1)[
 
-(if: $currentCrystal &gt; 1)[
-Trait Crystals: |tc&gt;[(text: $player&#39;s inventory&#39;s crystal&#39;s trait)]
+---
+
+|tc&gt;[(plural: $player&#39;s inventory&#39;s crystal&#39;s trait,&quot;Trait Crystal&quot;)]
 
 |vigor&gt;[Tier (text: $player&#39;s vigor) Vigor - You recover (text: (floor: $killHealPercentage * 100))% of your maximum HP when killing a monster. |improveVigor&gt;[(linkrepeat: &quot;Improve&quot;)[(if: $player&#39;s inventory&#39;s crystal&#39;s trait is not 0)[(set: $player&#39;s vigor to it + 1, $player&#39;s inventory&#39;s crystal&#39;s trait to it - 1)(set: $killHealPercentage to $vigorousArray&#39;s ($player&#39;s vigor + 1))(rerun:?tc, ?vigor)]]](if: $player&#39;s vigor is 3)[(hide: ?improveVigor)]]
 |agile&gt;[Tier (text: $player&#39;s agility) Agility - You have a $dodgeChance% chance to dodge an attack. |improveAgile&gt;[(linkrepeat: &quot;Improve&quot;)[(if: $player&#39;s inventory&#39;s crystal&#39;s trait is not 0)[(set: $player&#39;s agility to it + 1, $player&#39;s inventory&#39;s crystal&#39;s trait to it - 1)(set: $dodgeChance to $agileArray&#39;s ($player&#39;s agility + 1))(rerun:?tc, ?agile)]]](if: $player&#39;s agility is 3)[(hide: ?improveAgile)]]
@@ -272,10 +274,10 @@ You sit down and meditate for a while, reflecting on your travels, and the monst
 [[Go home|claim]]]</tw-passagedata><tw-passagedata pid="18" name="Rest Event" tags="" position="100,600" size="100,100">
 
 
-You sit down and take a few hours to rest, taking a minute to eat some food.
+You sit down and take a little while to rest, taking a minute to eat some food.
 (if: $eventResult &lt; 20)[Suddenly, you see a beast come out from behind a tree, and you have to either fight or flee!
 
-[[Get ready to fight!|Monster Encounter]]](else:)[(if: $player&#39;s health &lt; $player&#39;s maxhealth)[(set: $player&#39;s health to ($clamp:it + (round:($player&#39;s maxhealth / 10)),1,$player&#39;s maxhealth))After a nice long break from your adventure, you stand up and extinguish your campfire.](else:)[You&#39;re glad you decided to take a break, and you feel much more confident.]
+[[Get ready to fight!|Monster Encounter]]](else:)[(if: $player&#39;s health &lt; $player&#39;s maxhealth)[(set: $player&#39;s health to ($clamp:it + (round:($player&#39;s maxhealth / 10)),1,$player&#39;s maxhealth))After a nice break from your adventure, you stand up and extinguish your campfire.](else:)[You&#39;re glad you decided to take a break, and you feel much more confident.]
 After your break, you decide that you should:
 
 [[Continue Adventuring|Adventure!]]
@@ -303,7 +305,7 @@ You find a nice clearing in the woods, and there doesn&#39;t seem to be anything
 [[Move on|Move on from clearing]]</tw-passagedata><tw-passagedata pid="22" name="Move on from clearing" tags="" position="300,750" size="100,100">
 
 
-You decide not to take a rest, as you might get ambushed if you do.
+You decide not to rest, as you might get ambushed if you do. Who knows if you might&#39;ve missed a monster behind some trees!
 
 [[Continue Adventuring|Adventure!]]
 [[Go home|claim]]</tw-passagedata><tw-passagedata pid="23" name="ROLL" tags="no-gui" position="1000,100" size="100,100">&lt;script&gt;deleteSaveSlot(&quot;A&quot;);&lt;/script&gt;(set: _str to (random: 1,6)+(random: 1,6)+(random: 1,6), _dex to (random: 1,6)+(random: 1,6)+(random: 1,6), _con to (random: 1,6)+(random: 1,6)+(random: 1,6))(set: _maxhp to 10 + _con * 2, _modifier to (floor: _str/2) - 1, _stabilityBonus to (floor: _con / 10))(set: _hp to _maxhp, _initiativeBonus to (floor: _dex / 3))(set: $player to (dm:&quot;name&quot;,&quot;&quot;,&quot;level&quot;,1,&quot;exp&quot;,0,&quot;gold&quot;,0,&quot;skillpoints&quot;,0,&quot;strength&quot;,_str,&quot;dexterity&quot;,_dex,&quot;constitution&quot;,_con,&quot;health&quot;,_hp,&quot;maxhealth&quot;,_maxhp,&quot;attack&quot;,(dm:&quot;die&quot;,4,&quot;modifier&quot;,_modifier),&quot;defence&quot;,0,&quot;stealth&quot;,_initiativeBonus,&quot;traitcrystals&quot;,0,&quot;stability&quot;,_stabilityBonus,&quot;vigor&quot;,0,&quot;agility&quot;,0,&quot;relentlessness&quot;,0,&quot;looting&quot;,0,&quot;adaptability&quot;,0,&quot;awareness&quot;,0,&quot;stash&quot;,0,&quot;healthpotions&quot;,0,&quot;nextlevel&quot;,30, &quot;inventory&quot;, (dm: &quot;potion&quot;,(dm:&quot;health&quot;,0),&quot;lockets&quot;,(ds:), &quot;crystal&quot;,(dm: &quot;trait&quot;,0),&quot;weapons&quot;,(ds:),&quot;armor&quot;,(ds:)),&quot;equipment&quot;,(dm: &quot;weapon&quot;,(dm:&quot;name&quot;,&quot;None&quot;,&quot;attacks&quot;,(a:&quot;throw a jab at&quot;,&quot;deliver a right hook to&quot;,&quot;uppercut&quot;),&quot;die&quot;,4),&quot;locket&quot;,&quot;None&quot;,&quot;armor&quot;,&quot;None&quot;)))(goto:&quot;Read Stats&quot;)</tw-passagedata><tw-passagedata pid="24" name="CUSTOM MACROS" tags="startup no-gui" position="900,100" size="100,100">(set: $giveFirstBlood to (macro:[(set: $firstKillAchievement to true, $achievementCount to it + 1)(output:)[You earned the First Blood Achievement!]]))
@@ -334,33 +336,33 @@ You decide not to take a rest, as you might get ambushed if you do.
 (if: $monstersEncountered is 0 and $daysRested is 0)[You seem to have just started, as you have nothing to track yet!
 
 ](if: $monstersEncountered &gt; 0)[COMBAT:
-Monsters Encountered: $monstersEncountered
-(if: $killCount &gt; 0)[Total Kills: $killCount
-Highest Killstreak: $highestKillStreak
-](if: $damageDealt &gt; 0)[Damage Dealt: $damageDealt
-](if: $damageTaken &gt; 0)[Damage Taken: $damageTaken
-](if: $dodgeCount &gt; 0)[Times Dodged: $dodgeCount
-](if: $survivedDeathBlowCount &gt; 0)[Killing Blows Survived: $survivedDeathBlowCount
-](if: $koCount &gt; 0)[Times Knocked Down: $koCount
-](if: $cheatedDeathCount &gt; 0)[Times You Cheated Death: $cheatedDeathCount
-](if: $deathCount &gt; 0)[Times Killed: $deathCount
-](if: $fleeCount &gt; 0)[Times Fled From Combat: $fleeCount]
+Encountered (plural: $monstersEncountered,&quot;monster&quot;).
+(if: $killCount &gt; 0)[Killed (plural:$killCount,&quot;monster&quot;).
+](if: $highestKillStreak is not 0)[Record kill streak of $highestKillStreak.
+](if: $damageDealt &gt; 0)[Dealt $damageDealt damage.
+](if: $damageTaken &gt; 0)[Took $damageTaken damage.
+](if: $dodgeCount &gt; 0)[Dodged (plural:$dodgeCount,&quot;time&quot;).
+](if: $survivedDeathBlowCount &gt; 0)[Brushed off (plural:$survivedDeathBlowCount,&quot;killing blow&quot;).
+](if: $koCount &gt; 0)[Knocked down (plural:$koCount,&quot;time&quot;).
+](if: $cheatedDeathCount &gt; 0)[Barely survived (plural: $cheatedDeathCount, &quot;time&quot;).
+](if: $deathCount &gt; 0)[Died (plural: $deathCount,&quot;time&quot;).
+](if: $fleeCount &gt; 0)[Fled from combat (plural:$fleeCount,&quot;time&quot;).]
 
 ](if: $expTotal &gt; 0)[TOTAL EARNINGS:
-Total EXP Gained: $expTotal(if: $goldTotal &gt; 0)[
-Total Gold Earned: $goldTotal]
-
+Gained $expTotal EXP.(if: $goldTotal &gt; 0)[
+Earned $goldTotal gold.]
 
 ](if: $eventCount &gt; 0)[EVENTS:
-Events Encountered: $eventCount
-Events Discovered: $eventsDiscovered/2
+Encountered (plural:$eventCount,&quot;event&quot;).
+Discovered (plural:$eventsDiscovered,&quot;event&quot;) of a total of 2.
 
 ](if: $daysRested &gt; 0)[OTHER:
-Days Spent Resting: $daysRested
+Spent (plural:$daysRested,&quot;day&quot;) resting.
 ]
 [[Return|main]]</tw-passagedata><tw-passagedata pid="27" name="Achievements" tags="" position="1150,600" size="100,100">
 
-Obtained Achievements $achievementCount/$achievementTotal:
+Obtained (plural: $achievementCount, &quot;achievement&quot;) of a total of $achievementTotal
+---
 (if: $level2Achievement is true)[Beginning of Your Journey: Level up for the first time.
 ](if: $level5Achievement is true)[Learning: Reach Level 5.
 ](if: $level10Achievement is true)[Competent: Reach Level 10.
@@ -368,7 +370,7 @@ Obtained Achievements $achievementCount/$achievementTotal:
 ](if: $level50Achievement is true)[Experienced: Reach Level 50.
 ](if: $level75Achievement is true)[Master: Reach Level 75.
 ](if: $level100Achievement is true)[Demigod: Reach Level 100.
-](if: $firstKillAchievement is true)[First Blood: Kill your first Monster.
+](if: $firstKillAchievement is true)[First Blood: Kill your first monster.
 ](if: $5StreakAchievement is true)[Mega Streak: Obtain a 5 Killstreak.
 ](if: $10StreakAchievement is true)[Ultra Streak: Obtain a 10 Killstreak.
 ](if: $15StreakAchievement is true)[Godly Streak: Obtain a 15 Killstreak.
@@ -378,13 +380,15 @@ Obtained Achievements $achievementCount/$achievementTotal:
 ](if: $unkillableAchievement is true)[&quot;I won&#39;t go down without a fight!&quot;: Survive a killing blow through non-magical effects.
 ](if: $cursedAchievement is true)[Cursed: Be cursed by a shrine.
 ](if: $blessedAchievement is true)[Blessed: Be blessed by a shrine.
-](if: $overkillAchievement is true)[Overkill: Deal 20+ more damage than you needed to kill a Monster.
-](if: $healthyAchievement is true)[Healthy: Have 100+ Max HP.
+](if: $overkillAchievement is true)[Overkill: Deal 20+ more damage than you needed to kill a monster.
+](if: $healthyAchievement is true)[Healthy: Have 100+ max HP.
 ](if: $traitsAchievement is true)[Jack of All Trades: Max out all traits.
-](if: $richAchievement is true)[Rich: Possess 5000 Gold at once.
+](if: $richAchievement is true)[Rich: Possess 5000 gold at once.
 ](if: $touristAchievement is true)[Tourist: Discover all Events.
-]
-(if: $achievementCount is not $achievementTotal)[Unobtained Achievements:
+](if: $achievementCount is not $achievementTotal)[
+
+Unobtained Achievements
+---
 (if: $level2Achievement is false)[Beginning of Your Journey: The only way you&#39;ll survive out there is when you improve yourself.
 ](if: $level5Achievement is false)[Learning: Learn more about yourself and your potential.
 ](if: $level10Achievement is false)[Competent: Learn the ways of the land.
@@ -396,9 +400,9 @@ Obtained Achievements $achievementCount/$achievementTotal:
 ](if: $5StreakAchievement is false)[Mega Streak: Be competent in a combat situation.
 ](if: $10StreakAchievement is false)[Ultra Streak: Hack and slash through them all.
 ](if: $15StreakAchievement is false)[Godly Streak: Let nothing knock you down.
-](if: $20StreakAchievement is false)[Impossible Streak: Make the Monsters fear your presence, as they know they are nothing.
+](if: $20StreakAchievement is false)[Impossible Streak: Make the monsters fear your presence, as they know they are nothing.
 ](if: $fleeAchievement is false)[&quot;AAAAAAAA&quot;: Sometimes running away is better than fighting.
-](if: $dodgeAchievement is false)[&quot;Can&#39;t touch this!&quot;: A quick movement to escape the jaws of a Monster.
+](if: $dodgeAchievement is false)[&quot;Can&#39;t touch this!&quot;: A quick movement to escape the jaws of a monster.
 ](if: $unkillableAchievement is false)[&quot;I won&#39;t go down without a fight!&quot;: Keep fighting, you cannot show a sign of weakness, even when you&#39;re about to die.
 ](if: $cursedAchievement is false)[Cursed: ???
 ](if: $blessedAchievement is false)[Blessed: ???
@@ -408,7 +412,7 @@ Obtained Achievements $achievementCount/$achievementTotal:
 ](if: $richAchievement is false)[Rich: That&#39;s a lot of money you&#39;ve got there.
 ](if: $touristAchievement is false)[Tourist: There&#39;s a lot out there to find.
 ]]
-[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.3&lt;/h4&gt;
+[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.4&lt;/h4&gt;
 (if: (saved-games:) contains &quot;A&quot;)[
 (link:&quot;New Game&quot;)[Are you sure you want to start a new game? All of your current progress will be lost! [[Yes|ROLL]]]
 (link:&quot;Load Game&quot;)[(load-game:&quot;A&quot;)]](else:)[
@@ -420,12 +424,14 @@ EXP: (print: &#39;&lt;progress value=&quot;&#39; + (text: $player&#39;s exp) + &
 
 You enter the Town Hall, and head to the teller.
 
+&quot;Oh, hello there(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]! Do you need anything?&quot;
+
 You can:
 
 [[Change Your Name]]
-[[Learn more about places you&#39;ve found on your adventures|places]]
+[[Learn more about any Events you&#39;ve discovered|places]]
 
-or just [[leave|main]]</tw-passagedata><tw-passagedata pid="35" name="Change Your Name" tags="no-gui" position="1250,900" size="100,100">What would you like your (cond: $player&#39;s name is not &quot;&quot;, &quot;new &quot;, &quot;&quot;)name to be(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]? (if:$player&#39;s name is &quot;&quot;)[(set:$cost to 0)Since you don&#39;t have a name, you can get one for free.](else:)[(set: $cost to 100)Changing/Removing your name will cost 100 GP.]
+or just [[leave.|main]]</tw-passagedata><tw-passagedata pid="35" name="Change Your Name" tags="no-gui" position="1250,900" size="100,100">What would you like your (cond: $player&#39;s name is not &quot;&quot;, &quot;new &quot;, &quot;&quot;)name to be(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]? (if:$player&#39;s name is &quot;&quot;)[(set:$cost to 0)Since you don&#39;t have a name, you can get one for free.](else:)[(set: $cost to 100)Changing/Removing your name will cost 100 GP.]
 
 (input-box:bind $newName,&quot;X&quot;,1)
 
@@ -439,7 +445,7 @@ or just [[leave|main]]</tw-passagedata><tw-passagedata pid="35" name="Change You
 
 Money: |gold&gt;[(text: $player&#39;s gold) GP]
 
-Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to Locket Pocket, where we sell various kinds of lockets! How may I help you?
+&quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to Locket Pocket, where we sell various kinds of lockets! How may I help you?&quot;
 
 |lou&gt;[Locket of Undying - 3000 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot; and $player&#39;s gold &gt;= 3000)[(set: $player&#39;s inventory&#39;s lockets to it + (ds:&quot;Locket of Undying&quot;), $player&#39;s gold to it - 3000)(rerun:?lou,?gold)]](if: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot;)[ | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A golden locket with the shape of a pair of wings embossed on it. The wings are glowing with a white light. //Revives you once per adventure.//&quot;, &quot;X&quot;)]]]
 
@@ -447,7 +453,7 @@ Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; +
 
 Money: |gold&gt;[(text: $player&#39;s gold) GP]
 
-Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Perfect Potions, where we brew only the highest quality potions! How may I help you?
+&quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Perfect Potions, where we brew only the highest quality potions! How may I help you?&quot;
 
 Health Potion - 20 GP - (link-repeat:&quot;Buy&quot;)[(if: $player&#39;s gold &gt;= 20)[(set: $player&#39;s gold to it - 20, $player&#39;s inventory&#39;s potion&#39;s health to it + 1)(rerun:?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A classic red potion. //Heals you to full health.//&quot;,&quot;X&quot;)]
 
@@ -455,7 +461,7 @@ Health Potion - 20 GP - (link-repeat:&quot;Buy&quot;)[(if: $player&#39;s gold &g
 
 Money: |gold&gt;[(text: $player&#39;s gold) GP]
 
-Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Unique Wares, where we have some pretty unique items! How may I help you?
+&quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Unique Wares, where we have some pretty unique items! How may I help you?&quot;
 
 |tc&gt;[Trait Crystal - (cond:$currentCrystal is not $traitTotal * 3 + 1,&quot;Stock: &quot;+(text: $traitTotal * 3 + 1 - $currentCrystal)+&quot; - &quot;+(text: 100 * $currentCrystal)+&quot; GP&quot;,&quot;OUT OF STOCK&quot;) - (link-repeat:&quot;Buy&quot;)[(if: $player&#39;s gold &gt;= 100 * $currentCrystal and $currentCrystal &lt; $traitTotal * 3 + 1)[(set: $player&#39;s gold to it - (100 * $currentCrystal), $currentCrystal to it + 1, $player&#39;s inventory&#39;s crystal&#39;s trait to it + 1)(rerun:?tc,?gold)]](if: $currentCrystal &lt;= $traitTotal * 3)[ | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A glowing green crystal, supposedly this helps improve a trait. //Can only be used on the Skills screen.//&quot;,&quot;X&quot;)]]]
 
@@ -463,7 +469,7 @@ Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; +
 
 Money: |gold&gt;[(text: $player&#39;s gold) GP]
 
-Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to my smithy, you need some armor or a weapon? I got it! How may I help you?
+&quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to my smithy, you need some armor or a weapon? I got it! How may I help you?&quot;
 
 Weapons
 ---
@@ -471,7 +477,7 @@ Weapons
 |shortsword&gt;[Shortsword - 400 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s weapons does not contain &quot;Shortsword&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s weapons does not contain &quot;Shortsword&quot; and $player&#39;s gold &gt;= 400)[(set: $player&#39;s inventory&#39;s weapons to it + (ds:&quot;Shortsword&quot;), $player&#39;s gold to it - 400)(rerun: ?shortsword,?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A standard shortsword, short and light, but deadly. //Damage: 1d8//&quot;, &quot;X&quot;)]]
 |longsword&gt;[Longsword - 500 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s weapons does not contain &quot;Longsword&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s weapons does not contain &quot;Longsword&quot; and $player&#39;s gold &gt;= 500)[(set: $player&#39;s inventory&#39;s weapons to it + (ds:&quot;Longsword&quot;), $player&#39;s gold to it - 500)(rerun: ?longsword,?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A standard steel longsword, long and heavy, but very lethal. //Damage: 1d10//&quot;, &quot;X&quot;)]]
 |morningstar&gt;[Morningstar - 750 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s weapons does not contain &quot;Morningstar&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s weapons does not contain &quot;Morningstar&quot; and $player&#39;s gold &gt;= 750)[(set: $player&#39;s inventory&#39;s weapons to it + (ds:&quot;Morningstar&quot;), $player&#39;s gold to it - 750)(rerun: ?morningstar,?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A steel club-like weapon with a spiked steel ball on its end, and is of medium weight. //Damage: 1d12//&quot;, &quot;X&quot;)]]
-|ferinber&gt;[Ferinber - 2000 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot; and $player&#39;s gold &gt;= 2000)[(set: $player&#39;s inventory&#39;s weapons to it + (ds:&quot;Ferinber&quot;), $player&#39;s gold to it - 2000)(rerun: ?ferinber,?gold)]](if: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot;)[ | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A well-forged greatsword, definitely deserves its name. //Damage: 1d20//&quot;, &quot;X&quot;)]]]
+|ferinber&gt;[Ferinber - 2000 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot; and $player&#39;s gold &gt;= 2000)[(set: $player&#39;s inventory&#39;s weapons to it + (ds:&quot;Ferinber&quot;), $player&#39;s gold to it - 2000)(rerun: ?ferinber,?gold)]](if: $player&#39;s inventory&#39;s weapons does not contain &quot;Ferinber&quot;)[ | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A well-forged greatsword, deserving of its name. //Damage: 1d20//&quot;, &quot;X&quot;)]]]
 
 Armor
 ---
@@ -488,11 +494,11 @@ You place your Locket of Undying on the markings of the shrine.
 
 [[Continue Adventuring|Adventure!]]
 [[Go home|claim]]</tw-passagedata><tw-passagedata pid="43" name="places" tags="no-gui" position="1400,900" size="100,100">What locations would you like to learn about?
-(if:$seenShrineEvent is false)[
-//???????//](else:)[
-[[Shrines]]](if:$seenClearingEvent is false)[
+(if:$seenClearingEvent is false)[
 //?????????//](else:)[
-[[Clearings]]]
+[[Clearings]]](if:$seenShrineEvent is false)[
+//???????//](else:)[
+[[Shrines]]]
 
 [[Go Back|Town Hall]]</tw-passagedata><tw-passagedata pid="44" name="Shrines" tags="no-gui" position="1325,1050" size="100,100">Shrines are very strange locations, which seem to have been long abandoned. Most shrines have lost their power through time, but some still have magic within them. Sometimes, this magic can be helpful, sometimes harmful. The shrines also have a marking on them for a certain locket. These markings can affect the locket in various ways.
 
