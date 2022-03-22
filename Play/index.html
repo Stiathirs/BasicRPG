@@ -418,7 +418,7 @@ You can:
 
 [[Change Your Name]]
 [[Learn more about any Events you&#39;ve discovered|places]]
-[[Take a look at the Guest Board|questBoard]](if: $questWeek is not (ceil: $day / 7))[(set: $questWeek to (ceil: $day / 7), _questIds to (range: 1,11))(move: _questIds&#39;s random into _q1)(move: _questIds&#39;s random into _q2)(move: _questIds&#39;s random into _q3)(set: $availableQuestIds to (ds:_q1,_q2,_q3))]
+[[Take a look at the Quest Board|questBoard]](if: $questWeek is not (ceil: $day / 7))[(set: $questWeek to (ceil: $day / 7), _questIds to (range: 1,11))(move: _questIds&#39;s random into _q1)(move: _questIds&#39;s random into _q2)(move: _questIds&#39;s random into _q3)(set: $availableQuestIds to (ds:_q1,_q2,_q3))]
 
 or just [[leave.|main]]</tw-passagedata><tw-passagedata pid="35" name="Change Your Name" tags="no-gui" position="1250,900" size="100,100">What would you like your (cond: $player&#39;s name is not &quot;&quot;, &quot;new &quot;, &quot;&quot;)name to be(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]? (if:$player&#39;s name is &quot;&quot;)[(set:$cost to 0)Since you don&#39;t have a name, you can get one for free.](else:)[(set: $cost to 100)Changing/Removing your name will cost 100 GP.]
 
