@@ -220,7 +220,7 @@ You dealt (if:$player&#39;s awareness &gt; 0)[1d(text: $player&#39;s equipment&#
 
 [[Attack]]
 (link: &quot;Flee (Lose 1/4 of your stash)&quot;)[ Are you Sure? [[Yes|flee]]]
-[[Inventory]]]]]](set: $openedInv to false)(rerun:?maingui)</tw-passagedata><tw-passagedata pid="15" name="Your life is in the hands of Fate" tags="no-gui" position="500,1200" size="100,100">(if: $reloadBlocker is false)[(set: $reloadBlocker to true)(if: not $undyingLocketCursed)[Your life is hanging in the balance(set: $failedLifeThrows to ($player&#39;s health / -1) * 2, $successfulLifeThrows to 0)(if: $player&#39;s health &lt; 0)[, and extra damage has lowered your survival rate.]
+[[Inventory]]]]]](set: $openedInv to false)</tw-passagedata><tw-passagedata pid="15" name="Your life is in the hands of Fate" tags="no-gui" position="500,1200" size="100,100">(if: $reloadBlocker is false)[(set: $reloadBlocker to true)(if: not $undyingLocketCursed)[Your life is hanging in the balance(set: $failedLifeThrows to ($player&#39;s health / -1) * 2, $successfulLifeThrows to 0)(if: $player&#39;s health &lt; 0)[, and extra damage has lowered your survival rate.]
 (live: 25ms)[(set: $rollResult to (random: 1,20))(if: $rollResult &lt;= 10)[(set: $failedLifeThrows to it + 1)](else:)[(set: $successfulLifeThrows to it + 1 + (cond: $rollResult is 20, $player&#39;s stability, 0))]Instability: (print: &#39;&lt;meter max=1000 min=0 value=&#39; + (text: $failedLifeThrows * 10) + &#39; high=1 low=1 optimum=0&gt;&#39;)
 Stability: (print: &#39;   &lt;meter max=1000 min=0 value=&#39; + (text: $successfulLifeThrows * 10) + &#39;&gt;&#39;)(if: ($failedLifeThrows &gt;= 100) or ($successfulLifeThrows &gt;= 100))[(stop:)(if: $failedLifeThrows &gt;= 100)[
 Your heart faulters, and then stops beating.
@@ -262,7 +262,7 @@ You sit down and meditate for a while, reflecting on your travels, and the monst
 ($giveBlessed:)]](else:)[relaxed from doing this, and it was a nice experience.]](if: $player&#39;s health &gt; 0)[
 
 [[Continue Adventuring|Adventure!]]
-[[Go home|claim]]](rerun:?maingui)</tw-passagedata><tw-passagedata pid="18" name="Rest Event" tags="" position="100,600" size="100,100">
+[[Go home|claim]]]</tw-passagedata><tw-passagedata pid="18" name="Rest Event" tags="" position="100,600" size="100,100">
 
 You sit down and take a little while to rest, taking a minute to eat some food.
 (if: $eventResult &lt; 20)[Suddenly, you see a beast come out from behind a tree, and you have to either fight or flee!
@@ -271,7 +271,7 @@ You sit down and take a little while to rest, taking a minute to eat some food.
 After your break, you decide that you should:
 
 [[Continue Adventuring|Adventure!]]
-[[Go home|claim]]](rerun:?maingui)</tw-passagedata><tw-passagedata pid="19" name="Move on from shrine" tags="" position="100,750" size="100,100">
+[[Go home|claim]]]</tw-passagedata><tw-passagedata pid="19" name="Move on from shrine" tags="" position="100,750" size="100,100">
 
 You decide to just leave, that the potential reward wasn&#39;t worth the risk of something terrible happening.
 
@@ -398,7 +398,7 @@ Unobtained Achievements
 ](if: $richAchievement is false)[Rich: That&#39;s a lot of money you&#39;ve got there.
 ](if: $touristAchievement is false)[Tourist: There&#39;s a lot out there to find.
 ]]
-[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.5&lt;/h4&gt;
+[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.6&lt;/h4&gt;
 (if: (saved-games:) contains &quot;A&quot;)[
 (link:&quot;New Game&quot;)[Are you sure you want to start a new game? All of your current progress will be lost! [[Yes|ROLL]]]
 (link:&quot;Load Game&quot;)[(load-game:&quot;A&quot;)]](else:)[
@@ -428,7 +428,7 @@ or just [[leave.|main]]</tw-passagedata><tw-passagedata pid="35" name="Change Yo
 [[Cancel|Town Hall]]</tw-passagedata><tw-passagedata pid="36" name="Name" tags="no-gui" position="1000,300" size="100,100">What will be your name? Or don&#39;t have one, your choice.
 (input-box:bind _name,&quot;X&quot;,1)
 
-(link:&quot;Come to Life&quot;)[(set: $player&#39;s name to _name, $player&#39;s gold to 100000)(goto:&quot;main&quot;)]</tw-passagedata><tw-passagedata pid="37" name="UPDATE" tags="no-gui" position="1275,550" size="100,100">UPDATING, PLEASE WAIT...(if: $vNum &lt; 4)[
+(link:&quot;Come to Life&quot;)[(set: $player&#39;s name to _name)(goto:&quot;main&quot;)]</tw-passagedata><tw-passagedata pid="37" name="UPDATE" tags="no-gui" position="1275,550" size="100,100">UPDATING, PLEASE WAIT...(if: $vNum &lt; 4)[
 Applying an update...(set: _armorRef to $player&#39;s equipment&#39;s armor)(set: $player&#39;s defence to (cond: _armorRef is &quot;None&quot;, 0, _armorRef is &quot;Cloth Armor&quot;, 2, _armorRef is &quot;Leather Armor&quot;, 4, _armorRef is &quot;Steel Armor&quot;, 6), $undyingLocketCursed to false, $vNum to 4)DONE](if: $vNum &lt; 5)[
 Applying an update...(set: $quest to (dm:&quot;name&quot;,&quot;&quot;,&quot;description&quot;,&quot;&quot;,&quot;current&quot;,0,&quot;goal&quot;,0,&quot;objective&quot;,&quot;&quot;,&quot;type&quot;,&quot;&quot;), $adventuring to false, $vNum to 5)DONE]
 [[UPDATE(S) COMPLETE, CLICK TO RETURN|main]]</tw-passagedata><tw-passagedata pid="38" name="Locket Pocket" tags="full-gui" position="1600,300" size="100,100">
@@ -514,7 +514,7 @@ Reward: (print: $quest&#39;s reward) GP
 (if: $quest&#39;s current &lt; $quest&#39;s goal)[(link:&quot;Abandon Quest&quot;)[(link:&quot;Are you sure? Click again to confirm.&quot;)[(set: $quest&#39;s name to &quot;&quot;)(rerun:?quest)]]](else:)[(link:&quot;Claim Rewards&quot;)[(replace: ?rewards)[
 You earned (print: $quest&#39;s reward) GP for quest completion.(set: $player&#39;s gold to it + $quest&#39;s reward, $quest&#39;s name to &quot;&quot;)(rerun: ?quest)]]]](else:)[No active quest, get one from the Quest Board in the Town Hall.]]|rewards&gt;[]
 
-[[Back|main]]</tw-passagedata></tw-storydata>
+[[Back|main]]</tw-passagedata><tw-passagedata pid="48" name="UPDATE GUI" tags="footer" position="1100,200" size="100,100">(unless: (passage:)&#39;s tags contains &quot;no-gui&quot;)[(rerun:?maingui)]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
