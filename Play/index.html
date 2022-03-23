@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play BasicRPG.</tw-noscript></noscript></tw-story>
-<tw-storydata name="BasicRPG" startnode="33" creator="Twine" creator-version="2.3.16" ifid="56CBD072-CE1D-4ECF-976F-5A521FF0E990" zoom="1" format="Harlowe" format-version="3.2.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-sidebar { display: none } tw-link, .enchantment-link {color: #0080ff}
+<tw-storydata name="BasicRPG" startnode="31" creator="Twine" creator-version="2.3.16" ifid="56CBD072-CE1D-4ECF-976F-5A521FF0E990" zoom="1" format="Harlowe" format-version="3.2.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-sidebar { display: none } tw-link, .enchantment-link {color: #0080ff}
 tw-link:hover, .enchantment-link:hover {color: #40c0ff} .visited {color: #0080ff} .visited:hover {color: #40c0ff}</style><script role="script" id="twine-user-script" type="text/twine-javascript">window.getStoragePrefix = function () {
 	return "(Saved Game " + Engine.options.ifid + ") ";
 }
@@ -24,10 +24,10 @@ Rolling 3d6 for Constitution: (text: $player&#39;s constitution)
 Done!
 
 [[Next|Name]]
-(if: $rerolls is not 1)[(linkrevealgoto: (text: $rerolls - 1) + &quot; Reroll&quot; + (cond: $rerolls &gt; 2, &quot;s&quot;, &quot;&quot;) + &quot; Left&quot;, &quot;ROLL&quot;)[(set: $rerolls to it - 1)]]</tw-passagedata><tw-passagedata pid="2" name="main" tags="full-gui" position="950,600" size="100,100">(if: $player&#39;s health &lt; 1)[(set:$player&#39;s health to 1, $res to 1)](set: $inventoryLocation to &quot;main&quot;)(if: $vNum &lt; 5)[(goto: &quot;UPDATE&quot;)](set: $adventureStarted to 0)
+(if: $rerolls is not 1)[(linkrevealgoto: (text: $rerolls - 1) + &quot; Reroll&quot; + (cond: $rerolls &gt; 2, &quot;s&quot;, &quot;&quot;) + &quot; Left&quot;, &quot;ROLL&quot;)[(set: $rerolls to it - 1)]]</tw-passagedata><tw-passagedata pid="2" name="main" tags="full-gui" position="950,600" size="100,100">(if: $player&#39;s health &lt; 1)[(set:$player&#39;s health to 1, $res to 1)](set: $inventoryLocation to &quot;main&quot;)(rerun:?maingui)(if: $vNum &lt; 0)[(goto: &quot;UPDATE&quot;)](set: $adventureStarted to 0)
 
 (if: $res is 1)[You were resurrected in town.(if: $player&#39;s stash &gt; 0 is true)[
-As you check for your stash, it&#39;s gone!(set:$player&#39;s stash to 0)]
+As you check for your stash, it&#39;s gone!]
 ](if: $usedUndyingLocket)[(set:$usedUndyingLocket to false, $undyingLocketCursed to false)The wings on your Locket of Undying begin to glow white once again.
 ]
 (if: $res is not 1)[[[Adventure!|adventureINIT]]](else:)[You are exhausted from your resurrection. Maybe you should rest?]
@@ -39,7 +39,7 @@ As you check for your stash, it&#39;s gone!(set:$player&#39;s stash to 0)]
 [[Quests]]
 [[Achievements]]
 [[Statistics]]
-
+(set:$player&#39;s stash to 0)
 (if:(save-game:&quot;A&quot;))[](else:)[(alert: &quot;Your game couldn&#39;t be saved. Are cookies blocked?&quot;,&quot;OK&quot;)]</tw-passagedata><tw-passagedata pid="3" name="Adventure!" tags="no-gui" position="700,700" size="100,100">(set: _eventRoll to (random: 1,100), $eventResult to (random: 1,100), $eventCount to it + 1)
 (if: _eventRoll &lt;= 5 and $killStreak &gt;= 5 and $justAtEvent is false)[(set: $justAtEvent to true)(goto:&quot;Shrine&quot;)](elseif: _eventRoll &lt;= 15 and $killStreak &gt;= 2 and $justAtEvent is false)[(set: $justAtEvent to true)(goto:&quot;Clearing&quot;)](else:)[(set: $eventCount to it - 1)(goto:&quot;Monster Encounter&quot;)]
 
@@ -317,7 +317,7 @@ You decide not to rest, as you might get ambushed if you do. Who knows if you mi
 (set: $giveTraits to (macro:[(set: $traitsAchievement to true, $achievementCount to it + 1)(output:)[You earned the Jack of All Trades Achievement!]]))
 (set: $giveTourist to (macro:[(set: $touristAchievement to true, $achievementCount to it + 1)(output:)[You earned the Tourist Achievement!]]))
 (set: $levelScript to (macro:[(set: $player&#39;s skillpoints to it + 3, $player&#39;s level to it + 1, $player&#39;s nextlevel to it + (round: it * $reqInc), $player&#39;s exp to it - $player&#39;s nextlevel)(output:)[You leveled up! You got 3 skillpoints!]]))
-(set:$clamp to (macro:num-type _input,num-type _min,num-type _max,[(if: _min &gt; _max)[(error: &quot;I can&#39;t clamp a number if the max value is lower then the min value.&quot;)](out-data:(max:(min:_input,_max),_min))]))</tw-passagedata><tw-passagedata pid="25" name="GENERAL VARS" tags="startup no-gui" position="800,100" size="100,100">(set: $rerolls to 4, $day to 1, $res to 0, $traitTotal to 6, $vNum to 5, $killHealPercentage to 0, $reqInc to 0.15, $currentCrystal to 1, $dodgeChance to 0, $lastStandChance to 0, $goldMultiplier to 0, $expMultiplier to 1, $vigorousArray to (a:0,0.05,0.07,0.1), $agileArray to (a:0,3,5,10), $unrelentingArray to (a:0,1,3,5), $looterArray to (a:0,0.25,0.50,0.75), $quickLearnerArray to (a:1,1.1,1.2,1.3), $blackout to (t8ndepart: &quot;dissolve&quot;) + (t8ntime: 3s), $usedUndyingLocket to false, $undyingLocketCursed to false, $quest to (dm:&quot;name&quot;,&quot;&quot;,&quot;description&quot;,&quot;&quot;,&quot;current&quot;,0,&quot;goal&quot;,0,&quot;objective&quot;,&quot;&quot;,&quot;type&quot;,&quot;&quot;), $adventuring to false)</tw-passagedata><tw-passagedata pid="26" name="Statistics" tags="full-gui" position="850,450" size="100,100">
+(set:$clamp to (macro:num-type _input,num-type _min,num-type _max,[(if: _min &gt; _max)[(error: &quot;I can&#39;t clamp a number if the max value is lower then the min value.&quot;)](out-data:(max:(min:_input,_max),_min))]))</tw-passagedata><tw-passagedata pid="25" name="GENERAL VARS" tags="startup no-gui" position="800,100" size="100,100">(set: $rerolls to 4, $day to 1, $res to 0, $traitTotal to 6, $vNum to 0, $killHealPercentage to 0, $reqInc to 0.15, $currentCrystal to 1, $dodgeChance to 0, $lastStandChance to 0, $goldMultiplier to 0, $expMultiplier to 1, $vigorousArray to (a:0,0.05,0.07,0.1), $agileArray to (a:0,3,5,10), $unrelentingArray to (a:0,1,3,5), $looterArray to (a:0,0.25,0.50,0.75), $quickLearnerArray to (a:1,1.1,1.2,1.3), $blackout to (t8ndepart: &quot;dissolve&quot;) + (t8ntime: 3s), $usedUndyingLocket to false, $undyingLocketCursed to false, $quest to (dm:&quot;name&quot;,&quot;&quot;,&quot;description&quot;,&quot;&quot;,&quot;current&quot;,0,&quot;goal&quot;,0,&quot;objective&quot;,&quot;&quot;,&quot;type&quot;,&quot;&quot;), $adventuring to false)</tw-passagedata><tw-passagedata pid="26" name="Statistics" tags="full-gui" position="850,450" size="100,100">
 
 (if: $monstersEncountered is 0 and $daysRested is 0)[You seem to have just started, as you have nothing to track yet!
 
@@ -398,7 +398,7 @@ Unobtained Achievements
 ](if: $richAchievement is false)[Rich: That&#39;s a lot of money you&#39;ve got there.
 ](if: $touristAchievement is false)[Tourist: There&#39;s a lot out there to find.
 ]]
-[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.6&lt;/h4&gt;
+[[Back|main]]</tw-passagedata><tw-passagedata pid="28" name="STAT VARS" tags="startup no-gui" position="800,200" size="100,100">(set: $killCount to 0, $expTotal to 0, $goldTotal to 0, $eventCount to 0, $koCount to 0, $deathCount to 0, $dodgeCount to 0, $cheatedDeathCount to 0, $highestKillStreak to 0, $seenShrineEvent to false, $seenClearingEvent to false, $eventsDiscovered to 0, $damageDealt to 0, $damageTaken to 0, $survivedDeathBlowCount to 0, $monstersEncountered to 0, $daysRested to 0, $fleeCount to 0)</tw-passagedata><tw-passagedata pid="29" name="ACHIEVEMENT VARS" tags="startup no-gui" position="800,300" size="100,100">(set: $firstKillAchievement to false, $5StreakAchievement to false, $10StreakAchievement to false, $15StreakAchievement to false, $20StreakAchievement to false, $fleeAchievement to false, $dodgeAchievement to false, $unkillableAchievement to false, $cursedAchievement to false, $blessedAchievement to false, $richAchievement to false, $level2Achievement to false, $level5Achievement to false, $level10Achievement to false, $level25Achievement to false, $level50Achievement to false, $level75Achievement to false, $level100Achievement to false, $overkillAchievement to false, $healthyAchievement to false, $traitsAchievement to false, $touristAchievement to false, $achievementCount to 0 , $achievementTotal to 22)</tw-passagedata><tw-passagedata pid="30" name="TITLE" tags="no-gui" position="600,0" size="100,100">&lt;h1&gt;BasicRPG&lt;/h1&gt;&lt;h4&gt;Version 4.7&lt;/h4&gt;
 (if: (saved-games:) contains &quot;A&quot;)[
 (link:&quot;New Game&quot;)[Are you sure you want to start a new game? All of your current progress will be lost! [[Yes|ROLL]]]
 (link:&quot;Load Game&quot;)[(load-game:&quot;A&quot;)]](else:)[
@@ -408,7 +408,7 @@ Level: (text: $player&#39;s level)
 EXP: (print: &#39;&lt;progress value=&quot;&#39; + (text: $player&#39;s exp) + &#39;&quot; min=&quot;0&quot; max=&quot;&#39; + (text: $player&#39;s nextlevel) + &#39;&quot;&gt;&lt;/meter&gt;&#39;) (text: $player&#39;s exp)/(text:$player&#39;s nextlevel)](if: (passage:)&#39;s tags contains &quot;full-gui&quot;)[
 (if:$adventuring)[Stash: (text:$player&#39;s stash) GP](else:)[Money: |gold&gt;[(text: $player&#39;s gold)] GP
 Day: $day]]
-]</tw-passagedata><tw-passagedata pid="33" name="Emergency Data Wipe" tags="no-gui" position="100,100" size="100,100">&lt;!-- This passage will act as a data wipe when I accidentally leave a debug command (like tons of gold on start, definitely didn&#39;t do that noooo), for now this also allows inits to go first --&gt;(goto:&quot;TITLE&quot;)</tw-passagedata><tw-passagedata pid="34" name="Town Hall" tags="" position="1250,750" size="100,100">
+]</tw-passagedata><tw-passagedata pid="33" name="Town Hall" tags="" position="1250,750" size="100,100">
 
 You enter the Town Hall, and head to the teller.
 
@@ -420,36 +420,35 @@ You can:
 [[Learn more about any Events you&#39;ve discovered|places]]
 [[Take a look at the Quest Board|questBoard]](if: $questWeek is not (ceil: $day / 7))[(set: $questWeek to (ceil: $day / 7), _questIds to (range: 1,11))(move: _questIds&#39;s random into _q1)(move: _questIds&#39;s random into _q2)(move: _questIds&#39;s random into _q3)(set: $availableQuestIds to (ds:_q1,_q2,_q3))]
 
-or just [[leave.|main]]</tw-passagedata><tw-passagedata pid="35" name="Change Your Name" tags="no-gui" position="1250,900" size="100,100">What would you like your (cond: $player&#39;s name is not &quot;&quot;, &quot;new &quot;, &quot;&quot;)name to be(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]? (if:$player&#39;s name is &quot;&quot;)[(set:$cost to 0)Since you don&#39;t have a name, you can get one for free.](else:)[(set: $cost to 100)Changing/Removing your name will cost 100 GP.]
+or just [[leave.|main]]</tw-passagedata><tw-passagedata pid="34" name="Change Your Name" tags="no-gui" position="1250,900" size="100,100">What would you like your (cond: $player&#39;s name is not &quot;&quot;, &quot;new &quot;, &quot;&quot;)name to be(if: $player&#39;s name is not &quot;&quot;)[, (v6mprint:$player&#39;s name)]? (if:$player&#39;s name is &quot;&quot;)[(set:$cost to 0)Since you don&#39;t have a name, you can get one for free.](else:)[(set: $cost to 100)Changing/Removing your name will cost 100 GP.]
 
 (input-box:bind $newName,&quot;X&quot;,1)
 
 (if: $player&#39;s gold &gt;= $cost)[(link:&quot;Change Name - &quot;+(cond: $cost is 0,&quot;Free&quot;, &quot;100 GP&quot;))[(set: $player&#39;s name to $newName, $player&#39;s gold to it - $cost)(goto:&quot;Town Hall&quot;)]](else:)[(link-repeat:&quot;Change Name - 100 GP - TOO EXPENSIVE&quot;)[]]
-[[Cancel|Town Hall]]</tw-passagedata><tw-passagedata pid="36" name="Name" tags="no-gui" position="1000,300" size="100,100">What will be your name? Or don&#39;t have one, your choice.
+[[Cancel|Town Hall]]</tw-passagedata><tw-passagedata pid="35" name="Name" tags="no-gui" position="1000,300" size="100,100">What will be your name? Or don&#39;t have one, your choice.
 (input-box:bind _name,&quot;X&quot;,1)
 
-(link:&quot;Come to Life&quot;)[(set: $player&#39;s name to _name)(goto:&quot;main&quot;)]</tw-passagedata><tw-passagedata pid="37" name="UPDATE" tags="no-gui" position="1275,550" size="100,100">UPDATING, PLEASE WAIT...(if: $vNum &lt; 4)[
-Applying an update...(set: _armorRef to $player&#39;s equipment&#39;s armor)(set: $player&#39;s defence to (cond: _armorRef is &quot;None&quot;, 0, _armorRef is &quot;Cloth Armor&quot;, 2, _armorRef is &quot;Leather Armor&quot;, 4, _armorRef is &quot;Steel Armor&quot;, 6), $undyingLocketCursed to false, $vNum to 4)DONE](if: $vNum &lt; 5)[
-Applying an update...(set: $quest to (dm:&quot;name&quot;,&quot;&quot;,&quot;description&quot;,&quot;&quot;,&quot;current&quot;,0,&quot;goal&quot;,0,&quot;objective&quot;,&quot;&quot;,&quot;type&quot;,&quot;&quot;), $adventuring to false, $vNum to 5)DONE]
-[[UPDATE(S) COMPLETE, CLICK TO RETURN|main]]</tw-passagedata><tw-passagedata pid="38" name="Locket Pocket" tags="full-gui" position="1600,300" size="100,100">
+(link:&quot;Come to Life&quot;)[(set: $player&#39;s name to _name)(goto:&quot;main&quot;)]</tw-passagedata><tw-passagedata pid="36" name="UPDATE" tags="no-gui" position="1275,550" size="100,100">UPDATING, PLEASE WAIT...
+&lt;!-- no updates here yet bc wipe ;w; --&gt;
+[[UPDATE(S) COMPLETE, CLICK TO RETURN|main]]</tw-passagedata><tw-passagedata pid="37" name="Locket Pocket" tags="full-gui" position="1600,300" size="100,100">
 
 &quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to Locket Pocket, where we sell various kinds of lockets! How may I help you?&quot;
 
 |lou&gt;[Locket of Undying - 3000 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot; and $player&#39;s gold &gt;= 3000)[(set: $player&#39;s inventory&#39;s lockets to it + (ds:&quot;Locket of Undying&quot;), $player&#39;s gold to it - 3000)(rerun:?lou,?gold)]](if: $player&#39;s inventory&#39;s lockets does not contain &quot;Locket of Undying&quot;)[ | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;A golden locket with the shape of a pair of wings embossed on it. The wings are glowing with a white light. //Revives you once per adventure.//&quot;, &quot;X&quot;)]]]
 
-[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="39" name="Perfect Potions" tags="full-gui" position="1600,400" size="100,100">
+[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="38" name="Perfect Potions" tags="full-gui" position="1600,400" size="100,100">
 
 &quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Perfect Potions, where we brew only the highest quality potions! How may I help you?&quot;
 
 Health Potion - 20 GP - (link-repeat:&quot;Buy&quot;)[(if: $player&#39;s gold &gt;= 20)[(set: $player&#39;s gold to it - 20, $player&#39;s inventory&#39;s potion&#39;s health to it + 1)(rerun:?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A classic red potion. //Heals you to full health.//&quot;,&quot;X&quot;)]
 
-[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="40" name="Unique Wares" tags="full-gui" position="1600,500" size="100,100">
+[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="39" name="Unique Wares" tags="full-gui" position="1600,500" size="100,100">
 
 &quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;, &quot; ),&quot;&quot;) to Unique Wares, where we have some pretty unique items! How may I help you?&quot;
 
 |tc&gt;[Trait Crystal - (cond:$currentCrystal is not $traitTotal * 3 + 1,&quot;Stock: &quot;+(text: $traitTotal * 3 + 1 - $currentCrystal)+&quot; - &quot;+(text: 100 * $currentCrystal)+&quot; GP&quot;,&quot;OUT OF STOCK&quot;) - (link-repeat:&quot;Buy&quot;)[(if: $player&#39;s gold &gt;= 100 * $currentCrystal and $currentCrystal &lt; $traitTotal * 3 + 1)[(set: $player&#39;s gold to it - (100 * $currentCrystal), $currentCrystal to it + 1, $player&#39;s inventory&#39;s crystal&#39;s trait to it + 1)(rerun:?tc,?gold)]](if: $currentCrystal &lt;= $traitTotal * 3)[ | (link-rerun: &quot;Examine&quot;)[(dialog:&quot;A glowing green crystal, supposedly this helps improve a trait. //Can only be used on the Skills screen.//&quot;,&quot;X&quot;)]]]
 
-[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="41" name="Brute&#39;s Smithy" tags="full-gui" position="1600,200" size="100,100">
+[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="40" name="Brute&#39;s Smithy" tags="full-gui" position="1600,200" size="100,100">
 
 &quot;Welcome(cond: $player&#39;s name is not &quot;&quot;,(v6mprint: &quot;, &quot; + $player&#39;s name + &quot;,&quot; ),&quot;&quot;) to my smithy, you need some armor or a weapon? I got it! How may I help you?&quot;
 
@@ -467,7 +466,7 @@ Armor
 |leatherarmor&gt;[Leather Armor - 800 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s armor does not contain &quot;Leather Armor&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s armor does not contain &quot;Leather Armor&quot; and $player&#39;s gold &gt;= 800)[(set: $player&#39;s inventory&#39;s armor to it + (ds:&quot;Leather Armor&quot;), $player&#39;s gold to it - 800)(rerun: ?leatherarmor,?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;Armor made up of a leather vest, elbow, arm, knee, and leg pads. //Damage Reduction: 4//&quot;, &quot;X&quot;)]]
 |steelarmor&gt;[Steel Armor - 1500 GP - (link-repeat:(cond: $player&#39;s inventory&#39;s armor does not contain &quot;Steel Armor&quot;, &quot;Buy&quot;, &quot;Owned&quot;))[(if: $player&#39;s inventory&#39;s armor does not contain &quot;Steel Armor&quot; and $player&#39;s gold &gt;= 1500)[(set: $player&#39;s inventory&#39;s armor to it + (ds:&quot;Steel Armor&quot;), $player&#39;s gold to it - 1500)(rerun: ?steelarmor,?gold)]] | (link-rerun: &quot;Examine&quot;)[(dialog: &quot;Your stereotypical steel armor. Despite being your stereotypical armor, it still offers great protection. //Damage Reduction: 6//&quot;, &quot;X&quot;)]]
 
-[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="42" name="placeLocket" tags="" position="300,450" size="100,100">
+[[Return to the shopping district.|Shopping District]]</tw-passagedata><tw-passagedata pid="41" name="placeLocket" tags="" position="300,450" size="100,100">
 
 You place your Locket of Undying on the markings of the shrine.
 (if: $eventResult &lt; 30)[(if: not $undyingLocketCursed)[The wings on the locket begin to glow(cond: $usedUndyingLocket, &quot; once again, but... the wings are glowing red, how strange...&quot;, &quot;...red? Strange.&quot;)(set: $undyingLocketCursed to true, $usedUndyingLocket to true)(if: not $cursedAchievement)[
@@ -475,22 +474,22 @@ You place your Locket of Undying on the markings of the shrine.
 ($giveBlessed:)]](else:)[Nothing seems to happen, but you can feel that this shrine has magic in it. Maybe it tried to add magic to your locket, but your locket already has that magic?]]
 
 [[Continue Adventuring|Adventure!]]
-[[Go home|claim]]</tw-passagedata><tw-passagedata pid="43" name="places" tags="no-gui" position="1400,900" size="100,100">What locations would you like to learn about?
+[[Go home|claim]]</tw-passagedata><tw-passagedata pid="42" name="places" tags="no-gui" position="1400,900" size="100,100">What locations would you like to learn about?
 (if:$seenClearingEvent is false)[
 //?????????//](else:)[
 [[Clearings]]](if:$seenShrineEvent is false)[
 //???????//](else:)[
 [[Shrines]]]
 
-[[Go Back|Town Hall]]</tw-passagedata><tw-passagedata pid="44" name="Shrines" tags="no-gui" position="1325,1050" size="100,100">Shrines are very strange locations, which seem to have been long abandoned. Most shrines have lost their power through time, but some still have magic within them. Sometimes, this magic can be helpful, sometimes harmful. The shrines also have a marking on them for a certain locket. These markings can affect the locket in various ways.
+[[Go Back|Town Hall]]</tw-passagedata><tw-passagedata pid="43" name="Shrines" tags="no-gui" position="1325,1050" size="100,100">Shrines are very strange locations, which seem to have been long abandoned. Most shrines have lost their power through time, but some still have magic within them. Sometimes, this magic can be helpful, sometimes harmful. The shrines also have a marking on them for a certain locket. These markings can affect the locket in various ways.
 
 Required Kill Streak: 5+
 
-[[Go Back|places]]</tw-passagedata><tw-passagedata pid="45" name="Clearings" tags="no-gui" position="1475,1050" size="100,100">There are various clearings throughout the woods, and make for nice spots to rest during your long, battle-heavy travels. However, it can be rather difficult to see any monsters that might be hiding.
+[[Go Back|places]]</tw-passagedata><tw-passagedata pid="44" name="Clearings" tags="no-gui" position="1475,1050" size="100,100">There are various clearings throughout the woods, and make for nice spots to rest during your long, battle-heavy travels. However, it can be rather difficult to see any monsters that might be hiding.
 
 Required Kill Streak: 3+
 
-[[Go Back|places]]</tw-passagedata><tw-passagedata pid="46" name="questBoard" tags="no-gui" position="1100,900" size="100,100">(if: $quest&#39;s name is &quot;&quot;)[You take a look at the available quests to choose from:
+[[Go Back|places]]</tw-passagedata><tw-passagedata pid="45" name="questBoard" tags="no-gui" position="1100,900" size="100,100">(if: $quest&#39;s name is &quot;&quot;)[You take a look at the available quests to choose from:
 (if: $availableQuestIds contains 1)[
 (link:&quot;Kill 5 Dire Wolves - Reward: 100 GP&quot;)[(set: $quest to (dm:&quot;name&quot;,&quot;Hunting&quot;,&quot;description&quot;,&quot;Kill 5 Dire Wolves&quot;,&quot;current&quot;,0,&quot;goal&quot;,5,&quot;objective&quot;,&quot;dire wolf&quot;,&quot;type&quot;,&quot;killed&quot;,&quot;reward&quot;,100))(goto: &quot;Town Hall&quot;)]](if: $availableQuestIds contains 2)[
 (link:&quot;Kill 5 Dire Rats - Reward: 100 GP&quot;)[(set: $quest to (dm:&quot;name&quot;,&quot;Hunting&quot;,&quot;description&quot;,&quot;Kill 5 Dire Rats&quot;,&quot;current&quot;,0,&quot;goal&quot;,5,&quot;objective&quot;,&quot;dire rat&quot;,&quot;type&quot;,&quot;killed&quot;,&quot;reward&quot;,100))(goto: &quot;Town Hall&quot;)]](if: $availableQuestIds contains 3)[
@@ -506,7 +505,7 @@ Required Kill Streak: 3+
 
 [[Don&#39;t take a quest.|Town Hall]]](else:)[You&#39;re already doing a quest. Complete or abandon your current quest to take a new one.
 
-[[Back|Town Hall]]]</tw-passagedata><tw-passagedata pid="47" name="Quests" tags="" position="975,425" size="100,100">
+[[Back|Town Hall]]]</tw-passagedata><tw-passagedata pid="46" name="Quests" tags="" position="975,425" size="100,100">
 |quest&gt;[(if: $quest&#39;s name is not &quot;&quot;)[Active Quest:
 (print: $quest&#39;s name) - (print: $quest&#39;s description)
 Reward: (print: $quest&#39;s reward) GP
@@ -514,7 +513,7 @@ Reward: (print: $quest&#39;s reward) GP
 (if: $quest&#39;s current &lt; $quest&#39;s goal)[(link:&quot;Abandon Quest&quot;)[(link:&quot;Are you sure? Click again to confirm.&quot;)[(set: $quest&#39;s name to &quot;&quot;)(rerun:?quest)]]](else:)[(link:&quot;Claim Rewards&quot;)[(replace: ?rewards)[
 You earned (print: $quest&#39;s reward) GP for quest completion.(set: $player&#39;s gold to it + $quest&#39;s reward, $quest&#39;s name to &quot;&quot;)(rerun: ?quest)]]]](else:)[No active quest, get one from the Quest Board in the Town Hall.]]|rewards&gt;[]
 
-[[Back|main]]</tw-passagedata><tw-passagedata pid="48" name="UPDATE GUI" tags="footer" position="1100,200" size="100,100">(unless: (passage:)&#39;s tags contains &quot;no-gui&quot;)[(rerun:?maingui)]</tw-passagedata></tw-storydata>
+[[Back|main]]</tw-passagedata><tw-passagedata pid="47" name="UPDATE GUI" tags="footer" position="1100,200" size="100,100">(unless: (passage:)&#39;s tags contains &quot;no-gui&quot;)[(rerun:?maingui)]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
