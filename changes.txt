@@ -1,0 +1,7 @@
+Grammar fixes
+Added 6 achievements
+Added location selection for specific encounter grinding
+Quest rewards changed
+Changed monster maxhp, exp, and gold rewards to suit the location
+Different locations have different monsters
+Renamed the streak achievements to Slaughter, Massacre, Bloodbath, and Apex Predator
